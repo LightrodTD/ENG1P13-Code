@@ -118,9 +118,12 @@ def exists(username, username_list):
 #********************************************
 
 def create_user(username, password, username_list, filename):
+    #Check if username already exist in database.txt
     if exists(username, get_user_data(filename)[0]) == True:
+        #If it does, we cannot create an account with the same username
         return False
     else:
+        #Otherwise, add the username and password to the new line
         with open(filename, 'a') as my_file:
             my_file.write(username+'\t'+password+'\n')
         return True
@@ -130,9 +133,11 @@ def create_user(username, password, username_list, filename):
 #********************************************
 
 def login(username, password, filename):
+    #If the username does exist in database.txt,
     if exists(username, get_user_data(filename)[0]) == True:
-        
+        #Get the index for the password
         password_index = get_user_data(filename)[0].index(username)
+        #If passwords typed matches password stored, then user has succesfully logged in
         if get_user_data(filename)[1][password_index] == password:
             return True
         else:
